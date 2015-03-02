@@ -56,14 +56,12 @@ func (queue *ArrayResizingQueue) Dequeue() interface{} {
 
 func (queue *ArrayResizingQueue) changeCapacity(capacity int) {
 	data := queue.data
-	queue.capacity = capacity
 	queue.data = make([]interface{}, capacity)
-	count := 0
-	for i := queue.first; i < queue.last; i++ {
-		queue.data[count] = data[i]
-		count++
+	for i := 0; i < queue.size; i++ {
+		index := (queue.first + i) % queue.capacity
+		queue.data[i] = data[index]
 	}
 	queue.first = 0
-	queue.last = count
-
+	queue.last = queue.size
+	queue.capacity = capacity
 }
