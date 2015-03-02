@@ -10,8 +10,8 @@ type ArrayResizingStack struct {
 
 func NewArrayResizingStack() *ArrayResizingStack {
 	return &ArrayResizingStack{
-		2,
-		make([]int, 2),
+		10,
+		make([]int, 10),
 		0,
 	}
 }
