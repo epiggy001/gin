@@ -27,10 +27,10 @@ func (queue *ArrayResizingQueue) Peek() interface{} {
 }
 
 func (queue *ArrayResizingQueue) Enqueue(n interface{}) {
-	queue.size++
-	if queue.size > queue.capacity {
+	if queue.size+1 > queue.capacity {
 		queue.changeCapacity(2 * queue.capacity)
 	}
+	queue.size++
 	queue.data[queue.last] = n
 	queue.last++
 	if queue.last == queue.capacity {
@@ -42,14 +42,15 @@ func (queue *ArrayResizingQueue) Dequeue() interface{} {
 	if queue.IsEmpty() {
 		return nil
 	}
-	queue.size--
-	if queue.size < queue.capacity/4 {
-		queue.changeCapacity(queue.capacity / 4)
-	}
 	n := queue.data[queue.first]
+	queue.size--
 	queue.first++
 	if queue.first == queue.capacity {
 		queue.first = 0
+	}
+
+	if queue.size < queue.capacity/4 {
+		queue.changeCapacity(queue.capacity / 4)
 	}
 	return n
 }
