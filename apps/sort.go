@@ -46,4 +46,5 @@ func main() {
 	testSort("Insertion", sorter.Insertion)
 	testSort("Selection", sorter.Selection)
 	testSort("Shell", sorter.Shell)
+	testSort("Merge", sorter.Merge)
 }
