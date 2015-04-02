@@ -133,3 +133,48 @@ func Merge(a []int) {
 	l := len(a)
 	mergeSort(a, 0, l-1)
 }
+
+func merge(a []int, h int) {
+	l := len(a)
+	b := make([]int, l)
+	n := 0
+	for i := 0; i < l; {
+		s1 := n * h * 2
+		s2 := (2*n + 1) * h
+		if s2 > l {
+			s2 = l
+		}
+		e1 := s2
+		e2 := s2 + h
+		if e2 > l {
+			e2 = l
+		}
+		for s1 < e1 || s2 < e2 {
+			if s1 >= e1 {
+				b[i] = a[s2]
+				s2++
+			} else if s2 >= e2 {
+				b[i] = a[s1]
+				s1++
+			} else if a[s1] < a[s2] {
+				b[i] = a[s1]
+				s1++
+			} else {
+				b[i] = a[s2]
+				s2++
+			}
+			i++
+		}
+		n++
+	}
+	for i := 0; i < l; i++ {
+		a[i] = b[i]
+	}
+}
+
+func MergeNR(a []int) {
+	l := len(a)
+	for h := 1; h < l; h = h * 2 {
+		merge(a, h)
+	}
+}
